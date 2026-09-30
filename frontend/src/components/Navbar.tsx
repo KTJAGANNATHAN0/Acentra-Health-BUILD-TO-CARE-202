@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, Sliders, PlayCircle, RefreshCw, Radio } from 'lucide-react';
+import { Sliders, PlayCircle, RefreshCw, Radio } from 'lucide-react';
 
 interface NavbarProps {
   onOpenRules: () => void;
