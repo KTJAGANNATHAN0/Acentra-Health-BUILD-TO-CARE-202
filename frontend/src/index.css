@@ -106,15 +106,9 @@ body {
 }
 
 .brand-icon-box {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, #4f46e5, #ec4899);
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
 
 .brand-title {

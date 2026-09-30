@@ -20,7 +20,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="header-bar glass-panel">
       <div className="brand-wrapper">
         <div className="brand-icon-box">
-          <ShieldAlert size={24} />
+          <img src="/batman-logo.png" alt="Accentra Fraud Engine" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
         </div>
         <div>
           <h1 className="brand-title">ACCENTRA FRAUD ENGINE</h1>
