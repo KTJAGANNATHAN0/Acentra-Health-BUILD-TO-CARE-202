@@ -1,0 +1,31 @@
+services:
+  # Backend FastAPI Service
+  - type: web
+    name: fraud-rule-engine-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python scripts/seed.py
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: DATABASE_URL
+        value: sqlite:///./fraud_engine.db
+      - key: NOTIFIER
+        value: log
+      - key: FLAG_THRESHOLD
+        value: "50"
+      - key: HIGH_RISK_THRESHOLD
+        value: "80"
+
+  # Frontend Reviewer Console
+  - type: web
+    name: fraud-reviewer-console
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
