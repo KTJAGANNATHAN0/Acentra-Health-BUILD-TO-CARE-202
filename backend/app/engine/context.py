@@ -71,7 +71,8 @@ class RuleContext:
         self,
         account_id: str,
         days: int = 30,
-        before_time: Optional[datetime] = None
+        before_time: Optional[datetime] = None,
+        exclude_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Compute rolling mean, standard deviation, and count for the account.
         
@@ -79,6 +80,7 @@ class RuleContext:
             account_id: Account identifier.
             days: Lookback duration in days (default 30).
             before_time: Reference timestamp.
+            exclude_id: Transaction ID to exclude.
             
         Returns:
             Dict containing 'count', 'mean', 'std', and sample amounts.
@@ -94,9 +96,11 @@ class RuleContext:
             .filter(
                 Transaction.account_id == account_id,
                 Transaction.timestamp >= start_time,
-                Transaction.timestamp < before_time  # strictly prior
+                Transaction.timestamp <= before_time
             )
         )
+        if exclude_id:
+            query = query.filter(Transaction.id != exclude_id)
         
         amounts = [r[0] for r in query.all()]
         count = len(amounts)

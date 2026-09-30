@@ -45,7 +45,8 @@ class UnusualAmountRule(Rule):
         stats = ctx.get_history_stats(
             account_id=txn.account_id,
             days=lookback_days,
-            before_time=txn.timestamp
+            before_time=txn.timestamp,
+            exclude_id=txn.id
         )
 
         count = stats["count"]
@@ -122,7 +123,7 @@ class UnusualAmountRule(Rule):
                 score=score,
                 reason=(
                     f"Statistically anomalous amount: ${amount:.2f} has z-score of {z_score:.2f} "
-                    f"(exceeds {k_std}σ threshold; 30d mean: ${mean:.2f}, std: ${std:.2f})"
+                    f"(exceeds {k_std} std threshold; 30d mean: ${mean:.2f}, std: ${std:.2f})"
                 ),
                 evidence={
                     "amount": amount,
@@ -139,7 +140,7 @@ class UnusualAmountRule(Rule):
             rule_name=self.name,
             triggered=False,
             score=0,
-            reason=f"Amount ${amount:.2f} normal (z-score {z_score:.2f} < {k_std}σ, mean: ${mean:.2f})",
+            reason=f"Amount ${amount:.2f} normal (z-score {z_score:.2f} < {k_std} std, mean: ${mean:.2f})",
             evidence={
                 "amount": amount,
                 "mean": mean,
